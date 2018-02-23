@@ -8,10 +8,10 @@ $(document).ready(function() {
 
 
     alert("Click on the crystals to add to your score. Match your score with the displayed number to win.");
-    
+
    function initializeGame(){
         playerScore = 0;
-        $("#playernumber").html("Your number: " + playerScore); 
+        $("#playernumber").html("Your score: " + playerScore); 
 
         cpuNumber = randomCpu();
         $("#cpunumber").html("Number to Match: " + cpuNumber);
@@ -34,7 +34,7 @@ $(document).ready(function() {
     $(".crystal").on("click", function(){
         var number = parseInt($(this).val());
         playerScore += number;
-        $("#playernumber").html("Your number: " + playerScore);
+        $("#playernumber").html("Your score: " + playerScore);
 
         if(playerScore === cpuNumber){
             wins++;

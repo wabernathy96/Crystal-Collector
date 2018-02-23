@@ -1,51 +1,53 @@
 $(document).ready(function() {
+  
+    // Global Variables
+        var cpuNumber;
+        var playerScore;
+        var wins = 0;
+        var losses = 0;
 
 
-    // Universal Variables
-    // var playerNumber = 0;
-    var wins = 0;
-    var losses = 0;
-    var playerNumber = 0;
+    alert("Click on the crystals to add to your score. Match your score with the displayed number to win.");
     
+   function initializeGame(){
+        playerScore = 0;
+        $("#playernumber").html("Your number: " + playerScore); 
 
-
-    // Reset the game
-    var resetGame = function(){
-        playerNumber = 0;
+        cpuNumber = randomCpu();
+        $("#cpunumber").html("Number to Match: " + cpuNumber);
         
-
-    }
-    // Computer generates a random number
-    var cpuChoice = Math.floor((Math.random() * (120 - 19) + 1) + 19);
-        console.log(cpuChoice);
-
-    // Random numbers generate for crystals
-    function randomCrystal(){
-        var randomNumber = Math.floor((Math.random() * 12) + 1);
-        return randomNumber;
-        
-    }
-        
-        // Random Numbers are assigned to each crystal
         $(".crystal").each(function(){
             $(this).val(randomCrystal());
             console.log($(this));
         });
+    };
 
-         
-    //  Player can click on each crystal
+    function randomCpu(){
+        return Math.floor((Math.random() * (120 - 19) + 1) + 19);
+    };
+
+    function randomCrystal(){
+        var randomNumber = Math.floor((Math.random() * 12) + 1);
+        return randomNumber;  
+    };
+    
     $(".crystal").on("click", function(){
         var number = parseInt($(this).val());
+        playerScore += number;
+        $("#playernumber").html("Your number: " + playerScore);
 
-        playerNumber += number;
+        if(playerScore === cpuNumber){
+            wins++;
+            $("#wins").html("Wins: " + wins);
+            initializeGame();
+        }
+        else if(playerScore > cpuNumber){
+            losses++;
+            $("#losses").html("Losses: " + losses);
+            initializeGame();
 
-        console.log(playerNumber);
-        
-        // $("#playernumber").text(
-        //     parseInt($(this).val()) + parseInt(playerNumber));
-        
-    
-    });  
-        //  Crystal's numbers get put together then added 
-    // Sum of crystal's gets checked against random number
+        }
+    });
+
+    initializeGame();
 });
